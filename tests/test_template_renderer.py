@@ -24,8 +24,14 @@ class TestRenderer(unittest.TestCase):
         self.assertEqual(self.template_renderer.get_template_path(template_file), 
                 template_dir_path + '/' + template_file)
 
-    def test_format_plain_text(self):
-        formatted_template = self.template_renderer.render('test1.html', {'foo': 'bar'})
+    def test_get_raw_template(self):
+        raw_template = self.template_renderer._get_raw_template('test1.html')
 
-        self.assertEqual(formatted_template, 'Hello Mr. Bar')
+        self.assertEqual(raw_template, 'Hello Mr. Foo')
+
+    def test_format_template(self):
+        data = {'bar': 'Foo'}
+        formatted = self.template_renderer.render('test1.html', data)
+
+        self.assertEqual(formatted, 'Hello Mr. Foo')
 
