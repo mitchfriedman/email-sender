@@ -1,3 +1,4 @@
+from application.email import Email
 from siphon import Client
 from siphon.queue import Queue
 
@@ -8,7 +9,11 @@ class EmailQueue(object):
         self.queue_name = queue_name
         self.emails = Queue(self.client.Queues, self.queue_name)
     
-    def fetch(self):
-        return self.emails.dequeue()
+    def fetch_email(self):
+        email = self._siphon_dequeue()
+        template = email.pop('template', None)
+        return Email(template, **email)
     
+    def _siphon_dequeue(self):
+        return self.emails.dequeue()
 
