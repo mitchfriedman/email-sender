@@ -24,9 +24,15 @@ class Driver(object):
                 self.sleep()
                 continue
              
-            template = templater.render(email)
-            #message = self.email_sender.build_email
-            sender.send(template)
+            email_body = templater.render(email.template, email.email_data)
+            message = self.email_sender.build_email(email.email_data.get('to'),
+                                                    email.email_data.get('subject'),
+                                                    email_body)
+
+            try:
+                sender.send_email(template)
+            except Exception as e:
+                print(e)
 
     def _sleep(self):
         time.sleep(self.sleep_time)
