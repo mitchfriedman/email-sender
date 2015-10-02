@@ -17,5 +17,5 @@ class TestEmailQueue(unittest.TestCase):
             'template': 'template_1.html',
         }
         email = self.email_queue.fetch_email()
-        self.assertEqual(email.template, 'template_1.html')
+        self.assertEqual(email.template_name, 'template_1.html')
 

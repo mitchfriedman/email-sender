@@ -14,8 +14,9 @@ class TemplateRenderer(object):
     def get_template_path(self, template_name):
         return os.path.join(self.template_dir, template_name)
     
-    def render(self, template_name, data):
+    def render(self, email):
+        template_name = email.template_name
         raw_template = self._get_raw_template(template_name)
         template = Template(raw_template)
-        return template.render(**data)
+        return template.render(**email.data)
         

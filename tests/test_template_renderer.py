@@ -1,6 +1,7 @@
 import unittest
 import os
 from application.template_renderer import TemplateRenderer
+from application.email import Email
 
 
 class TestRenderer(unittest.TestCase):
@@ -31,7 +32,8 @@ class TestRenderer(unittest.TestCase):
 
     def test_format_template(self):
         data = {'bar': 'Foo'}
-        formatted = self.template_renderer.render('test1.html', data)
-
+        email = Email('test1.html', data)
+        setattr(email, 'data', data)
+        formatted = self.template_renderer.render(email)
         self.assertEqual(formatted, 'Hello Mr. Foo')
 

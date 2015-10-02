@@ -23,8 +23,9 @@ class Driver(object):
             if not email:
                 self.sleep()
                 continue
-            
-            template = templater.generate(email)
+             
+            template = templater.render(email)
+            #message = self.email_sender.build_email
             sender.send(template)
 
     def _sleep(self):
