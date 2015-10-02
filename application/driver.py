@@ -1,6 +1,8 @@
 import time
 from siphon import Client
 from application.queue_fetcher import EmailQueue
+from application.template_renderer import TemplateRenderer
+from application.sender import Sender
 import os
 
 
@@ -8,7 +10,7 @@ class Driver(object):
 
     _MAX_SLEEP_TIME = 30
 
-    def __init__(self, config):
+    def __init__(self, config=None):
         self.sleep_time = 1
         self.queue = EmailQueue(Client('http://127.0.0.1:8000'), 'emails')
         self.template_renderer = TemplateRenderer('templates/')
@@ -36,7 +38,7 @@ class Driver(object):
 
     def _sleep(self):
         time.sleep(self.sleep_time)
-        self.sleep_time = max(self.sleep_time * 2, self._MAX_SLEEP_TIME)
+        self.sleep_time = min(self.sleep_time * 2, self._MAX_SLEEP_TIME)
 
 
 
